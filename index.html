@@ -26,6 +26,8 @@
   .nav ul a:hover{color:var(--green)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:.98rem;font-family:inherit;transition:.15s}
   .btn-wa{background:var(--wa);color:#fff}.btn-wa:hover{background:#1e8a4b}
+  .btn-wa2{background:#fff;color:#1e8a4b;border:2px solid var(--wa)}.btn-wa2:hover{background:#e9f7ef}
+  #orderForm .btn{width:100%;justify-content:center;margin-top:10px}
   .btn-gold{background:var(--gold);color:var(--green)}.btn-gold:hover{background:var(--gold-2)}
   .btn-sm{padding:9px 16px;font-size:.9rem}
   .soc{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--green);border:1.5px solid #e2d6b8;text-decoration:none}
@@ -68,10 +70,11 @@
   .price{font-size:1.35rem;font-weight:700;color:var(--green)}
   .price small{font-size:.85rem;color:var(--muted);font-weight:500}
   .buy{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
-  .qty{display:flex;align-items:center;border:1.5px solid #dfe6e1;border-radius:999px;overflow:hidden}
-  .qty button{width:36px;height:36px;border:0;background:#f4f7f5;font-size:1.15rem;cursor:pointer;color:var(--green)}
-  .qty button:hover{background:var(--green-soft)}
-  .qty output{min-width:70px;text-align:center;font-weight:600;font-size:.9rem}
+  .qty{display:flex;align-items:center;border:2px solid var(--green);border-radius:999px;overflow:hidden;background:#fff}
+  .qty button{width:40px;height:40px;border:0;background:var(--green);font-size:1.3rem;font-weight:700;cursor:pointer;color:#fff}
+  .qty button:hover{background:#0f3a20}
+  .qty button:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .qty output{min-width:70px;text-align:center;font-weight:700;font-size:1rem;color:#1b1b1b;opacity:1}
 
   .chai{background:var(--green);color:var(--cream)}
   .chai .head h2{color:var(--cream)}
@@ -249,9 +252,10 @@
         </div>
         <label for="msg">Anything else?</label>
         <textarea id="msg" placeholder="Delivery date, gift packing, questions…"></textarea>
-        <button class="btn btn-wa" type="submit"><svg width="20" height="20"><use href="#wa"/></svg>Send order on WhatsApp</button>
+        <button class="btn btn-wa" type="submit" data-num="923315680310"><svg width="20" height="20"><use href="#wa"/></svg>Send order on WhatsApp (0331 5680310)</button>
+        <button class="btn btn-wa2" type="submit" data-num="923165187711"><svg width="20" height="20"><use href="#wa"/></svg>Or send to 0316 5187711</button>
         <div class="err" id="err"></div>
-        <p class="note">This opens WhatsApp with your order written out, and nothing is sent until you press send. We'll confirm the final price and delivery there.<br>WhatsApp: <b>0316 5187711</b> · Call: <b>0331 5680310</b> · Email: <b>homstove.isb@gmail.com</b></p>
+        <p class="note">This opens WhatsApp with your order written out, and nothing is sent until you press send. We'll confirm the final price and delivery there.<br>WhatsApp: <b>0331 5680310</b> or <b>0316 5187711</b> · Email: <b>homstove.isb@gmail.com</b></p>
       </form>
     </div>
   </section>
@@ -266,8 +270,9 @@
     <div>
       <h4>Order &amp; contact</h4>
       <ul>
-        <li><a class="wa-link" href="#">WhatsApp: 0316 5187711</a></li>
-        <li><a href="tel:+923315680310">Call: 0331 5680310</a></li>
+        <li><a class="wa-link" href="#">WhatsApp: 0331 5680310</a></li>
+        <li><a href="https://wa.me/c/923315680310" target="_blank" rel="noopener">View our WhatsApp catalog</a></li>
+        <li><a href="https://wa.me/923165187711" target="_blank" rel="noopener">WhatsApp / call: 0316 5187711</a></li>
         <li><a href="mailto:homstove.isb@gmail.com">Email: homstove.isb@gmail.com</a></li>
         <li><a href="https://www.instagram.com/homstove/" target="_blank" rel="noopener">Instagram: @homstove</a></li>
         <li><a href="https://www.facebook.com/homstove/" target="_blank" rel="noopener">Facebook: Homstove</a></li>
@@ -290,7 +295,7 @@
 <a class="fab" href="#order"><svg width="26" height="26"><use href="#wa"/></svg>Order <span class="cnt" id="cnt"></span></a>
 
 <script>
-const WA = "923165187711";
+const WA = "923315680310";
 const FREE = 5000;
 const products = [
   {id:"alsi", name:"Alsi Ladu", sub:"Flaxseed ladu", img:"img/alsi.jpg", price:3200, unit:"kg", step:0.5,
@@ -352,7 +357,7 @@ function render(){
   return {total, items};
 }
 
-const waUrl = t => "https://wa.me/" + WA + "?text=" + encodeURIComponent(t);
+const waUrl = (t, num) => "https://wa.me/" + (num || WA) + "?text=" + encodeURIComponent(t);
 document.querySelectorAll(".wa-link").forEach(a=>{
   const item = a.dataset.item;
   a.href = waUrl(item ? "Assalam o Alaikum Homstove! I'd like to ask about " + item + "."
@@ -374,7 +379,8 @@ document.getElementById("orderForm").addEventListener("submit", e=>{
   if(v("city")) lines.push("City/area: " + v("city"));
   if(v("msg")) lines.push("Note: " + v("msg"));
   const a = document.createElement("a");
-  a.href = waUrl(lines.join("\n")); a.target = "_blank"; a.rel = "noopener";
+  const num = (e.submitter && e.submitter.dataset.num) || WA;
+  a.href = waUrl(lines.join("\n"), num); a.target = "_blank"; a.rel = "noopener";
   document.body.appendChild(a); a.click(); a.remove();
 });
 
