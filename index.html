@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homstove — The House of Taste</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@500;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#1f4d36;--green-2:#2c6a4b;--green-soft:#e7efe9;--gold:#c9a24a;--gold-2:#e3c578;--cream:#fbf7ee;--ink:#1d241f;--muted:#5d6a62;--wa:#25a35a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6}
+  a{color:inherit}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+  .urdu{font-family:"Noto Nastaliq Urdu",serif;line-height:1.9}
+  .serif{font-family:"Playfair Display",serif}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(251,247,238,.95);backdrop-filter:blur(8px);border-bottom:1px solid #eadfc6}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:16px}
+  .brand img{height:58px;width:58px;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .nav ul{display:flex;gap:26px;list-style:none}
+  .nav ul a{text-decoration:none;font-weight:500;color:var(--muted)}
+  .nav ul a:hover{color:var(--green)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:.98rem;font-family:inherit;transition:.15s}
+  .btn-wa{background:var(--wa);color:#fff}.btn-wa:hover{background:#1e8a4b}
+  .btn-gold{background:var(--gold);color:var(--green)}.btn-gold:hover{background:var(--gold-2)}
+  .btn-sm{padding:9px 16px;font-size:.9rem}
+  .soc{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--green);border:1.5px solid #e2d6b8;text-decoration:none}
+  .soc:hover{background:var(--green);color:var(--gold-2);border-color:var(--green)}
+  @media(max-width:800px){.nav ul{display:none}}
+
+  .hero{background:var(--green);padding:22px 0 0}
+  .hero img{width:100%;border-radius:18px 18px 0 0}
+  .strip{background:var(--green);color:var(--cream);padding:26px 0 34px}
+  .strip .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .strip h1{font-family:Inter,system-ui,sans-serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;line-height:1.3;letter-spacing:-.01em}
+  .strip h1 em{color:var(--gold-2);font-style:normal}
+  .strip p{opacity:.85}
+
+  .perks{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-1px;padding:34px 0}
+  .perk{background:#fff;border:1px solid #efe5cf;border-radius:16px;padding:18px;display:flex;gap:12px;align-items:center}
+  .perk .ic{flex:none;width:44px;height:44px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;font-size:1.3rem}
+  .perk b{display:block;color:var(--green);font-size:.96rem;line-height:1.3}
+  .perk span{font-size:.84rem;color:var(--muted)}
+  @media(max-width:900px){.perks{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.perks{grid-template-columns:1fr}}
+
+  section{padding:70px 0}
+  .head{text-align:center;max-width:680px;margin:0 auto 40px}
+  .eyebrow{color:var(--gold);letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;font-weight:700}
+  .head h2{font-size:clamp(1.9rem,3.6vw,2.6rem);color:var(--green);margin:6px 0 8px}
+  .head p{color:var(--muted)}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{background:#fff;border-radius:20px;overflow:hidden;border:1px solid #eee3cc;display:flex;flex-direction:column;box-shadow:0 6px 24px rgba(31,77,54,.06)}
+  .card .ph{aspect-ratio:1/1;overflow:hidden}
+  .card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .card:hover .ph img{transform:scale(1.04)}
+  .card .bd{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1}
+  .card h3{font-size:1.35rem;color:var(--green)}
+  .card .sub{font-size:.82rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .card p{color:var(--muted);font-size:.94rem;margin:8px 0 14px;flex:1}
+  .price{font-size:1.35rem;font-weight:700;color:var(--green)}
+  .price small{font-size:.85rem;color:var(--muted);font-weight:500}
+  .buy{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+  .qty{display:flex;align-items:center;border:1.5px solid #dfe6e1;border-radius:999px;overflow:hidden}
+  .qty button{width:36px;height:36px;border:0;background:#f4f7f5;font-size:1.15rem;cursor:pointer;color:var(--green)}
+  .qty button:hover{background:var(--green-soft)}
+  .qty output{min-width:70px;text-align:center;font-weight:600;font-size:.9rem}
+
+  .chai{background:var(--green);color:var(--cream)}
+  .chai .head h2{color:var(--cream)}
+  .chai-title{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+  .chai-cup{object-fit:cover;width:96px;height:96px;border-radius:50%;border:3px solid var(--gold);box-shadow:0 6px 18px rgba(0,0,0,.3)}
+  .chai .head p{color:#cfdcd3}
+  .chai .card{border-color:rgba(227,197,120,.3)}
+  .frozen-wrap{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+  .frozen-wrap .card{max-width:420px;justify-self:center;width:100%}
+  .frozen-txt h2{font-size:clamp(1.9rem,3.6vw,2.5rem);color:var(--green);margin:6px 0 12px}
+  .frozen-txt p{color:var(--muted);margin-bottom:12px}
+  .frozen-txt ul{list-style:none;display:grid;gap:8px;margin-top:10px}
+  .frozen-txt li::before{content:"✓ ";color:var(--gold);font-weight:700}
+  @media(max-width:860px){.frozen-wrap{grid-template-columns:1fr}}
+
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .story img{border-radius:20px}
+  .story h2{font-size:clamp(1.8rem,3.4vw,2.4rem);color:var(--green);margin:6px 0 12px}
+  .story p{color:var(--muted);margin-bottom:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{background:#fff;border:1px solid #e8dcc0;padding:5px 12px;border-radius:999px;font-size:.85rem}
+  .chip.key{background:var(--gold);border-color:var(--gold);color:var(--green);font-weight:600}
+  @media(max-width:860px){.story{grid-template-columns:1fr}}
+
+  .gift{background:linear-gradient(135deg,#fff7e3,#f5e6bf);border-radius:24px;padding:40px;text-align:center;border:1px solid #ead7a3}
+  .gift .q{font-family:"Kaushan Script",cursive;font-size:clamp(1.9rem,4.2vw,2.9rem);color:var(--green);line-height:1.3}
+  .gift p{color:var(--muted);margin:10px auto 22px;max-width:560px}
+
+  #order{background:var(--green-soft)}
+  .cart{background:#fff;border-radius:22px;padding:30px;max-width:720px;margin:0 auto;box-shadow:0 10px 40px rgba(31,77,54,.08)}
+  .cart h3{font-size:1.5rem;color:var(--green);margin-bottom:14px}
+  .lines{border-top:1px solid #eef1ee;margin-bottom:16px}
+  .line{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eef1ee;font-size:.95rem}
+  .empty{color:var(--muted);padding:14px 0;text-align:center;font-size:.95rem}
+  .total{display:flex;justify-content:space-between;font-weight:700;font-size:1.15rem;color:var(--green);margin-bottom:6px}
+  .deliv{font-size:.88rem;margin-bottom:18px;padding:10px 14px;border-radius:12px;background:#fbf4e2;color:#7a5a12}
+  .deliv.ok{background:#e4f4ea;color:#1e7a45}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  label{display:block;font-size:.84rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+  input,textarea{width:100%;padding:12px 14px;border:1.5px solid #dfe6e1;border-radius:12px;font:inherit;background:#fbfcfb;margin-bottom:14px}
+  input:focus,textarea:focus{outline:none;border-color:var(--green-2)}
+  textarea{resize:vertical;min-height:70px}
+  .cart .btn{width:100%}
+  .note{font-size:.84rem;color:var(--muted);text-align:center;margin-top:12px}
+  .err{color:#b3261e;font-size:.88rem;text-align:center;margin-top:8px;min-height:1.2em}
+  @media(max-width:560px){.row{grid-template-columns:1fr}.cart{padding:22px}}
+
+  footer{background:#163a28;color:#cfdcd3;padding:52px 0 28px}
+  .foot{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px}
+  footer h4{color:var(--gold-2);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+  footer p,footer li{font-size:.93rem}
+  footer ul{list-style:none;display:grid;gap:6px}
+  footer a{text-decoration:none}footer a:hover{color:var(--gold-2)}
+  footer .brand img{height:120px;width:120px}
+  .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:34px;padding-top:18px;font-size:.8rem;opacity:.7;text-align:center}
+  @media(max-width:760px){.foot{grid-template-columns:1fr}}
+
+  .fab{position:fixed;right:18px;bottom:18px;z-index:30;height:58px;padding:0 18px 0 14px;border-radius:999px;background:var(--wa);color:#fff;display:flex;align-items:center;gap:8px;font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .fab .cnt{background:#fff;color:var(--wa);border-radius:999px;padding:0 8px;font-size:.85rem;display:none}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></symbol>
+</defs></svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none"><img src="img/logo.png" alt="Homstove logo"><span style="line-height:1.1"><b class="serif" style="font-size:1.4rem;color:var(--green);display:block">Homstove</b><small style="color:var(--gold);font-style:italic;font-family:Playfair Display,serif">The House of Taste</small></span></a>
+    <ul>
+      <li><a href="#chai">Chai ka Saathi</a></li>
+      <li><a href="#frozen">Frozen Foods</a></li>
+      <li><a href="#story">Our Recipe</a></li>
+      <li><a href="#order">Order</a></li>
+    </ul>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a class="soc" href="https://www.instagram.com/homstove/" target="_blank" rel="noopener" aria-label="Homstove on Instagram"><svg width="20" height="20" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a>
+      <a class="soc" href="https://www.facebook.com/homstove/" target="_blank" rel="noopener" aria-label="Homstove on Facebook"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7h3l.5-4h-3.5V9c0-.6.4-1 1-1Z"/></svg></a>
+      <a class="btn btn-wa btn-sm wa-link" href="#"><svg width="18" height="18"><use href="#wa"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero"><div class="wrap"><img src="img/banner.jpg" alt="Homstove range: Alsi Ladu, Channay ki Daal Halwa, Nashasta Ladu and Chicken Shami Kabab"></div></div>
+  <div class="strip">
+    <div class="wrap">
+      <div>
+        <h1>Traditional homemade delicacies, <em>made the way Ammi Jaan makes them.</em></h1>
+        <p>Laddus and halwa for tea time, and home-style kababs for your freezer.</p>
+      </div>
+      <a class="btn btn-gold" href="#chai">Browse &amp; order</a>
+    </div>
+  </div>
+
+  <div class="wrap perks">
+    <div class="perk"><div class="ic">🏠</div><div><b>Homemade taste</b><span>Traditional family recipes</span></div></div>
+    <div class="perk"><div class="ic">🌿</div><div><b>Quality ingredients</b><span>Desi ghee, gurr &amp; real dry fruit</span></div></div>
+    <div class="perk"><div class="ic">🎁</div><div><b>Custom orders</b><span>Ideal for families &amp; gifting</span></div></div>
+    <div class="perk"><div class="ic">🚚</div><div><b>Free delivery</b><span>On orders above Rs. 5,000</span></div></div>
+  </div>
+
+  <section id="chai" class="chai">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Homstove Saughaat · <span class="urdu">سوغات</span></div>
+        <h2 class="serif chai-title">Chai ka Saathi <img src="img/chai.jpg" alt="A glass cup of chai with cinnamon and cardamom" class="chai-cup"></h2>
+        <p>Homemade sweets to go with your evening chai. They also make a thoughtful gift for the people you love.</p>
+      </div>
+      <div class="grid" id="sweets"></div>
+    </div>
+  </section>
+
+  <section id="frozen">
+    <div class="wrap frozen-wrap">
+      <div class="frozen-txt">
+        <div class="eyebrow">Homstove Frozen Foods</div>
+        <h2 class="serif">Ghar jaisa swaad, dil se tayyar</h2>
+        <p>Our chicken shami kababs are made at home and frozen, so a homemade meal is only a few minutes away.</p>
+        <ul>
+          <li>For the school lunchbox</li>
+          <li>Ready when you're too busy to cook</li>
+          <li>For guests who arrive unannounced</li>
+          <li>No added preservatives</li>
+        </ul>
+      </div>
+      <div id="frozenCard"></div>
+    </div>
+  </section>
+
+  <section id="story" style="padding-top:20px">
+    <div class="wrap story">
+      <img src="img/alsi.jpg" alt="Homstove Alsi Ladu in a steel bowl">
+      <div>
+        <div class="eyebrow">What goes inside our Alsi Ladu</div>
+        <h2 class="serif">Healthy meetha, honest ingredients</h2>
+        <p>Our alsi ladu is made from Ammi Jaan's recipe. The nuts are roasted in desi ghee and the laddus are sweetened with gurr. There is no white sugar.</p>
+        <div class="chips">
+          <span class="chip key">Alsi (flaxseed)</span><span class="chip key">Desi ghee</span><span class="chip key">Gurr</span>
+          <span class="chip">Akhroot</span><span class="chip">Badaam</span><span class="chip">Safaid til</span><span class="chip">Soji</span>
+          <span class="chip">Joo ka atta</span><span class="chip">Kishmish</span><span class="chip">Gond</span><span class="chip">Char maghaz</span>
+          <span class="chip">Pumpkin seeds</span><span class="chip">Peanuts</span><span class="chip">Choti elaichi</span><span class="chip">Coconut</span>
+          <span class="chip">Khaskhas</span><span class="chip">Saunf</span><span class="chip">Methi dana</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:10px">
+    <div class="wrap">
+      <div class="gift">
+        <div class="q">Jo alfaaz na keh sakay,<br>wo saughaat keh de! ♡</div>
+        <p>Order a box for Eid, a wedding, a new baby or a friend who's far from home. Ask us about custom quantities and gift packing.</p>
+        <a class="btn btn-wa wa-link" data-item="a custom / gift order" href="#"><svg width="18" height="18"><use href="#wa"/></svg>Ask about gift orders</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="order">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Place your order</div>
+        <h2 class="serif">Your order</h2>
+        <p>Add items with the + buttons above, fill in your details, and send the order to us on WhatsApp.</p>
+      </div>
+      <form class="cart" id="orderForm">
+        <h3 class="serif">Order summary</h3>
+        <div class="lines" id="lines"><div class="empty">No items yet. Use the + buttons on the products above.</div></div>
+        <div class="total"><span>Estimated total</span><span id="total">Rs. 0</span></div>
+        <div class="deliv" id="deliv">Add Rs. 5,000 more for free delivery.</div>
+        <div class="row">
+          <div><label for="name">Your name</label><input id="name" placeholder="e.g. Ayesha"></div>
+          <div><label for="city">City / area</label><input id="city" placeholder="e.g. Lahore, DHA"></div>
+        </div>
+        <label for="msg">Anything else?</label>
+        <textarea id="msg" placeholder="Delivery date, gift packing, questions…"></textarea>
+        <button class="btn btn-wa" type="submit"><svg width="20" height="20"><use href="#wa"/></svg>Send order on WhatsApp</button>
+        <div class="err" id="err"></div>
+        <p class="note">This opens WhatsApp with your order written out, and nothing is sent until you press send. We'll confirm the final price and delivery there.<br>WhatsApp: <b>0316 5187711</b> · Call: <b>0331 5680310</b> · Email: <b>homstove.isb@gmail.com</b></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#top"><img src="img/logo.png" alt="Homstove"></a>
+      <p style="margin-top:12px">The House of Taste. Traditional homemade delicacies for your home.</p>
+    </div>
+    <div>
+      <h4>Order &amp; contact</h4>
+      <ul>
+        <li><a class="wa-link" href="#">WhatsApp: 0316 5187711</a></li>
+        <li><a href="tel:+923315680310">Call: 0331 5680310</a></li>
+        <li><a href="mailto:homstove.isb@gmail.com">Email: homstove.isb@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/homstove/" target="_blank" rel="noopener">Instagram: @homstove</a></li>
+        <li><a href="https://www.facebook.com/homstove/" target="_blank" rel="noopener">Facebook: Homstove</a></li>
+        <li>Free delivery on orders above Rs. 5,000</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#chai">Alsi Ladu</a></li>
+        <li><a href="#chai">Nashasta Ladu</a></li>
+        <li><a href="#chai">Channay ki Daal Halwa</a></li>
+        <li><a href="#frozen">Chicken Shami Kabab</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap copy">© <span id="yr"></span> Homstove · The House of Taste</div>
+</footer>
+
+<a class="fab" href="#order"><svg width="26" height="26"><use href="#wa"/></svg>Order <span class="cnt" id="cnt"></span></a>
+
+<script>
+const WA = "923165187711";
+const FREE = 5000;
+const products = [
+  {id:"alsi", name:"Alsi Ladu", sub:"Flaxseed ladu", img:"img/alsi.jpg", price:3200, unit:"kg", step:0.5,
+   desc:"Flaxseed, walnuts, almonds, gond and seeds, roasted in desi ghee and sweetened with gurr. No white sugar.", group:"sweets"},
+  {id:"nashasta", name:"Nashasta Ladu", sub:"Traditional winter ladu", img:"img/nashasta.jpg", price:3200, unit:"kg", step:0.5,
+   desc:"Traditional nashasta ladu with dry fruit, made with shakar (jaggery). Lovely with a hot cup of chai.", group:"sweets"},
+  {id:"halwa", name:"Channay ki Daal Halwa", sub:"Doodh mein bhigoyi daal", img:"img/halwa.jpg", price:1800, unit:"kg", step:0.5,
+   desc:"Channay ki daal soaked in milk and slow-cooked into a rich halwa, topped with almonds and pistachios.", group:"sweets"},
+  {id:"kabab", name:"Chicken Shami Kabab", sub:"Frozen · ready to fry", img:"img/kabab.jpg", price:500, unit:"dozen", step:1,
+   desc:"Homestyle chicken shami kababs, frozen and ready to fry. Serve with chutney and onions.", group:"frozen"}
+];
+const qty = Object.fromEntries(products.map(p=>[p.id,0]));
+const rs = n => "Rs. " + Math.round(n).toLocaleString("en-PK");
+const fmtQty = p => qty[p.id] ? (qty[p.id] + " " + p.unit) : "0";
+
+function card(p){
+  return `<div class="card">
+    <div class="ph"><img src="${p.img}" alt="Homstove ${p.name}" loading="lazy"></div>
+    <div class="bd">
+      <div class="sub">${p.sub}</div>
+      <h3 class="serif">${p.name}</h3>
+      <p>${p.desc}</p>
+      <div class="buy">
+        <div class="price">${rs(p.price)} <small>/ ${p.unit}</small></div>
+        <div class="qty">
+          <button type="button" aria-label="Less ${p.name}" data-id="${p.id}" data-d="-1">−</button>
+          <output id="q-${p.id}">0</output>
+          <button type="button" aria-label="More ${p.name}" data-id="${p.id}" data-d="1">+</button>
+        </div>
+      </div>
+    </div></div>`;
+}
+document.getElementById("sweets").innerHTML = products.filter(p=>p.group==="sweets").map(card).join("");
+document.getElementById("frozenCard").innerHTML = products.filter(p=>p.group==="frozen").map(card).join("");
+
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".qty button"); if(!b) return;
+  const p = products.find(x=>x.id===b.dataset.id);
+  qty[p.id] = Math.max(0, Math.round((qty[p.id] + p.step*Number(b.dataset.d))*10)/10);
+  render();
+});
+
+function render(){
+  let total = 0, items = 0, html = "";
+  products.forEach(p=>{
+    document.getElementById("q-"+p.id).textContent = fmtQty(p);
+    if(qty[p.id]>0){
+      const t = qty[p.id]*p.price; total += t; items++;
+      html += `<div class="line"><span>${p.name} × ${qty[p.id]} ${p.unit}</span><span>${rs(t)}</span></div>`;
+    }
+  });
+  document.getElementById("lines").innerHTML = html || '<div class="empty">No items yet. Use the + buttons on the products above.</div>';
+  document.getElementById("total").textContent = rs(total);
+  const d = document.getElementById("deliv");
+  if(total >= FREE){ d.textContent = "🎉 You get free delivery!"; d.classList.add("ok"); }
+  else { d.textContent = "Add " + rs(FREE-total) + " more for free delivery."; d.classList.remove("ok"); }
+  const c = document.getElementById("cnt");
+  c.style.display = items ? "inline" : "none"; c.textContent = items;
+  return {total, items};
+}
+
+const waUrl = t => "https://wa.me/" + WA + "?text=" + encodeURIComponent(t);
+document.querySelectorAll(".wa-link").forEach(a=>{
+  const item = a.dataset.item;
+  a.href = waUrl(item ? "Assalam o Alaikum Homstove! I'd like to ask about " + item + "."
+                      : "Assalam o Alaikum Homstove! I'd like to place an order.");
+  a.target = "_blank"; a.rel = "noopener";
+});
+
+document.getElementById("orderForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const {total, items} = render();
+  const err = document.getElementById("err");
+  if(!items){ err.textContent = "Please add at least one item first."; return; }
+  err.textContent = "";
+  const v = id => document.getElementById(id).value.trim();
+  const lines = ["Assalam o Alaikum Homstove! I'd like to order:"];
+  products.forEach(p=>{ if(qty[p.id]>0) lines.push("• " + p.name + " × " + qty[p.id] + " " + p.unit + " (" + rs(qty[p.id]*p.price) + ")"); });
+  lines.push("Estimated total: " + rs(total) + (total>=FREE ? " (free delivery)" : ""));
+  if(v("name")) lines.push("Name: " + v("name"));
+  if(v("city")) lines.push("City/area: " + v("city"));
+  if(v("msg")) lines.push("Note: " + v("msg"));
+  const a = document.createElement("a");
+  a.href = waUrl(lines.join("\n")); a.target = "_blank"; a.rel = "noopener";
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
